@@ -24,6 +24,13 @@
   color: white;
 }
 
+.background {
+  background-image:url('./seoul.jpg');
+  min-height : 100vh;
+  background-size : cover;
+  color: white;
+}
+
 .App-link {
   color: #61dafb;
 }
