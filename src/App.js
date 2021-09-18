@@ -5,15 +5,16 @@ import React,{ useState } from 'react';
 import { Navbar,Container,Nav,NavDropdown } from 'react-bootstrap';
 import './App.css';
 import Data from './data';
-
 import Detail from './Detail';
+import axios from 'axios';
 
 import { Link, Route, Switch } from 'react-router-dom';
 
 function App() {
 
-  let [shoes, alertShoes] = useState(Data); // 중요한 데이터는 app.js에다 보관하는게 좋다.
-
+    let [shoes, alertShoes] = useState(Data); // 중요한 데이터는 app.js에다 보관하는게 좋다.
+    let [stores, alertStores] = useState([10,11,12]);
+    let [loading, alertLoading] = useState(false);
 
   return (
     <div className="App">
@@ -38,14 +39,15 @@ function App() {
       </Navbar>
       
 <Switch>
-
-
-
       <Route exact path={"/"}>
         <div>
             <div>
                 <h1 className={"background"}> 20% season off</h1>
-                <h3> nice to meet you</h3>
+                {
+                    loading === true
+                        ? <Load></Load>
+                        : null
+                }
             </div>
 
             <div className={"container"}>
@@ -61,11 +63,31 @@ function App() {
                     }
                 </div>
             </div>
+            <button className = "btn btn-primary" onClick={()=> {
+
+                //axios.post('url', {id: 'cdd', pw: 1234}).then().catch
+                alertLoading(true);
+
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                    .then((result) => {
+
+                        alertLoading(false);
+
+                        // 여기에다가는 html 태그 쓰면 안됨(react의 특징)
+                        alertShoes((shoes) => [...shoes,...result.data]);
+                    })
+                    .catch((err) => {
+
+                        alertLoading(false);
+                        console.log(err)
+                    })
+
+            }}>더보기</button>
         </div>
       </Route>
 
       <Route path={"/detail/:id"}>
-            <Detail shoes={shoes}/>
+            <Detail shoes={shoes} stores={stores} alertStores={alertStores}/>
       </Route>
 
 </Switch>
@@ -80,6 +102,16 @@ function App() {
       <p>{props.shoes.content} & {props.shoes.price}</p>
     </div>
     )
+  }
+
+  function Load() {
+      return(
+          <div>
+              <div className={"my-alert2"}>
+                  <p>Loading....</p>
+              </div>
+          </div>
+      )
   }
 
 

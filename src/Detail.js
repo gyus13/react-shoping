@@ -17,13 +17,15 @@ function Detail(props) {
     let [inputText,alertInputText] = useState(' ')
 
     useEffect(() => {
+
+
        let timer = setTimeout(
            ()=>{
             alertAlert(false);
            },2000
        )
         return () => { clearTimeout() }
-    },[alert]); // alert가 있을때만 실행되는 Hook
+    },[alert]); // alert가 있을때만 실행되는 Hook 조건문임
 
 
     let { id } = useParams();
@@ -62,7 +64,11 @@ function Detail(props) {
                     <h4 className="pt-5">{findItem.title}</h4>
                     <p>{findItem.content}</p>
                     <p>{findItem.price}</p>
-                    <button className="btn btn-danger"> 주문하기 </button>
+                    <Info stores={props.stores}></Info>
+                    <button className="btn btn-danger" onClick={ ()=>{
+                        //사본 만들기
+                        props.alertStores([9,10,11])
+                    } }> 주문하기 </button>
                     <button className="btn btn-danger" onClick={
                         ()=>{
                             history.goBack();
@@ -71,6 +77,12 @@ function Detail(props) {
                 </div>
             </div>
         </div>
+    )
+}
+
+function Info(props){
+    return (
+        <p>재고 : {props.stores[0]}</p>
     )
 }
 
