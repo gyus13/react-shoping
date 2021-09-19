@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from "react";
 import { useHistory, useParams } from 'react-router-dom';
+import { Navbar,Container,Nav,NavDropdown } from 'react-bootstrap';
 import styled from 'styled-components';
 import './Detail.scss';
+
+import {CSSTransition} from "react-transition-group";
 
 let Box = styled.div`
   padding : 20px;
@@ -15,6 +18,9 @@ function Detail(props) {
 
     let [alert,alertAlert] = useState(true)
     let [inputText,alertInputText] = useState(' ')
+
+    let [tab, alertTab] = useState(0);
+    let [aniSwitch, alertAniSwitch] = useState(false);
 
     useEffect(() => {
 
@@ -76,8 +82,46 @@ function Detail(props) {
                     }> 뒤로가기 </button>
                 </div>
             </div>
+
+            <Nav variant="tabs" defaultActiveKey="/home">
+                <Nav.Item>
+                    <Nav.Link eventKey="link-0" onClick = {() => {
+                        alertAniSwitch(false);
+                        alertTab(0);
+                    }}>Active</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="link-1" onClick = {() => {
+                        alertAniSwitch(false);
+                        alertTab(1);
+                    }}>Option 2</Nav.Link>
+                </Nav.Item>
+            </Nav>
+
+            <CSSTransition in={aniSwitch} classNames={"wow"} timeout={500}>
+                <TabContent tab={tab} alertAniSwitch={alertAniSwitch}/>
+            </CSSTransition>
+
         </div>
     )
+}
+
+function TabContent(props) {
+
+    useEffect( ()=>{
+        props.alertAniSwitch(true);
+    })
+
+    if(props.tab === 0) {
+        return <div>0번째</div>
+    }
+    if(props.tab === 1) {
+        return <div>1번째</div>
+    }
+    if(props.tab === 2) {
+        return <div>2번째</div>
+    }
+
 }
 
 function Info(props){
