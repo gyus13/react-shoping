@@ -6,6 +6,7 @@ import { Navbar,Container,Nav,NavDropdown } from 'react-bootstrap';
 import './App.css';
 import Data from './data';
 import Detail from './Detail';
+import Login from './Login';
 import axios from 'axios';
 
 import { Link, Route, Switch } from 'react-router-dom';
@@ -89,12 +90,29 @@ function App() {
                     })
 
             }}>더보기</button>
+
+            <button onClick = {
+                () => {
+                    axios.get('http://dev.gyus.xyz/app/test')
+                        .then((result) => {
+                            console.log(result);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                }
+            }>통신</button>
         </div>
+
       </Route>
 
       <Route path={"/detail/:id"}>
             <Detail shoes={shoes} stores={stocks} alertStores={alertStocks}/>
       </Route>
+
+    <Route path={"/login"}>
+        <Login></Login>
+    </Route>
 
 </Switch>
     </div>
