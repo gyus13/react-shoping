@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React,{ useState, useContext } from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { Navbar,Container,Nav,NavDropdown } from 'react-bootstrap';
 import Detail from './Detail';
 import axios from "axios";
@@ -8,7 +8,20 @@ import axios from "axios";
 function Login() {
     let [id, setId] = useState(' ')
     let [password, setPassword] = useState(' ')
-    let [logon, setLogon] = useState(false)
+    let [logon, setLogon] = useState(true)
+    let [log, setLog] = useState('')
+
+    let [message, setMessage] = useState('');
+
+    useEffect(() => {
+
+        let timer = setTimeout(
+            ()=>{
+                setLogon(true);
+            },3000
+        )
+        return () => { clearTimeout() }
+    },[message])
 
 
     return(
@@ -19,9 +32,10 @@ function Login() {
 
             {
                 logon === true
-                ? <p> 성공! </p>
-                    : null
+                ? null
+                : <Message message={message}/>
             }
+
 
             <form style ={{display : 'flex', flexDirection:'column'}} onSubmit={
                 (e) => {
@@ -32,7 +46,10 @@ function Login() {
                     password: password
                 })
                     .then(function (response) {
-                        setLogon(true);
+                        let isSuccess = response.data.isSuccess;
+                        let message = response.data.message;
+                        setLogon(isSuccess);
+                        setMessage(message);
                         console.log(response);
                     })
                     .catch(function (error) {
@@ -40,25 +57,28 @@ function Login() {
                     })
                 }
             }>
-                <input type={"email"} placeholder={"email"} onChange={ (e)=> {
+                <input type={"text"} placeholder={"email"} onChange={ (e)=> {
                     setId(e.target.value)
                 }
                 }/>
+                <br/>
                 <input type={"password"} placeholder={"password"} onChange={ (e)=> {
                     setPassword(e.target.value)
                 }
                 }/>
+                <br/>
                 <button type={"submit"}>Login</button>
+                <br/>
             </form>
 
         </div>
     )
 }
 
-function Success() {
+function Message(props) {
     return(
-        <div className={"my-alert2"}>
-            <p> 성공! </p>
+        <div>
+            <p>{props.message}</p>
         </div>
     )
 }

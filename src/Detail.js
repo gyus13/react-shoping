@@ -24,7 +24,6 @@ function Detail(props) {
 
     useEffect(() => {
 
-
        let timer = setTimeout(
            ()=>{
             alertAlert(false);
