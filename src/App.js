@@ -7,6 +7,7 @@ import './App.css';
 import Data from './data';
 import Detail from './Detail';
 import Login from './Login';
+import Cart from './Cart';
 import axios from 'axios';
 
 import { Link, Route, Switch } from 'react-router-dom';
@@ -112,6 +113,10 @@ function App() {
 
     <Route path={"/login"}>
         <Login></Login>
+    </Route>
+
+    <Route path={"/cart"}>
+        <Cart></Cart>
     </Route>
 
 </Switch>

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import './Detail.scss';
 
 import {CSSTransition} from "react-transition-group";
+import {connect} from "react-redux";
 
 let Box = styled.div`
   padding : 20px;
@@ -73,6 +74,8 @@ function Detail(props) {
                     <button className="btn btn-danger" onClick={ ()=>{
                         //사본 만들기
                         props.alertStores([9,10,11])
+                        props.dispatch({type: 'addCart'}, {payload : {id : 2, name : 'newshoes', quan : 1}});
+                        history.push('/cart');
                     } }> 주문하기 </button>
                     <button className="btn btn-danger" onClick={
                         ()=>{
@@ -129,8 +132,15 @@ function Info(props){
     )
 }
 
-export default Detail;
+function stateToProps(state) {
+    console.log(state);
+    return {
+        state : state.reducer,
+        alertStateIs : state.reducer2
+    }
+}
 
+export default connect(stateToProps)(Detail)
 
 //Lifecycle Hook
 // class Detail2 extends React.Component {
