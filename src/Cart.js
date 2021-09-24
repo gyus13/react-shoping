@@ -1,8 +1,13 @@
 import React from "react";
 import {Table} from "react-bootstrap";
-import {connect} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 
 function Cart(props) {
+
+    let state = useSelector((state) => state);
+    console.log(state);
+    let dispatch = useDispatch();
+
     return(
         <div>
             <Table responsive="sm">
@@ -16,15 +21,15 @@ function Cart(props) {
                 </thead>
                 <tbody>
                 {
-                    props.state.map(
+                    state.reducer.map(
                         (a, i) => {
                             return (
                                 <tr key={i}>
-                                    <td>{ a.id + 1 }</td>
+                                    <td>{ a.id }</td>
                                     <td>{ a.name }</td>
                                     <td>{ a.quan }</td>
-                                    <td><button onClick = { () => { props.dispatch({ type : 'increase', payload : {name : 'kim'} }) }}>+</button>
-                                        <button onClick = { () => { props.dispatch({ type : 'decrease' }) }}>-</button></td>
+                                    <td><button onClick = { () => { dispatch({ type : 'increase', data : a.id }) }}>+</button>
+                                        <button onClick = { () => { dispatch({ type : 'decrease', data : a.id }) }}>-</button></td>
                                 </tr>
                             )
                         }
@@ -48,23 +53,17 @@ function Cart(props) {
     )
 }
 
-//tr 반복문 돌려보기
-// function trtr(props) {
-//     return(
-//
-//     )
-// }
 
 
 //redux store 데이터 갖고와서 props로 변환시켜준다.
-function stateToProps(state) {
-    console.log(state);
-    return {
-        state : state.reducer,
-        alertStateIs : state.reducer2
-    }
-}
+// function stateToProps(state) {
+//     console.log(state);
+//     return {
+//         state : state.reducer,
+//         alertStateIs : state.reducer2
+//     }
+// }
+//
+// export default connect(stateToProps)(Cart)
 
-export default connect(stateToProps)(Cart)
-
-//export default Cart;
+export default Cart;

@@ -73,9 +73,10 @@ function Detail(props) {
                     <Info stores={props.stores}></Info>
                     <button className="btn btn-danger" onClick={ ()=>{
                         //사본 만들기
-                        props.alertStores([9,10,11])
-                        props.dispatch({type: 'addCart'}, {payload : {id : 2, name : 'newshoes', quan : 1}});
+                        //props.alertStores([9,10,11])
+                        props.dispatch({type: 'addCart', payload : {id : findItem.id, name : findItem.title, quan : 1}});
                         history.push('/cart');
+
                     } }> 주문하기 </button>
                     <button className="btn btn-danger" onClick={
                         ()=>{

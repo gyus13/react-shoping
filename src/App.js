@@ -10,7 +10,7 @@ import Login from './Login';
 import Cart from './Cart';
 import axios from 'axios';
 
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch, useHistory } from 'react-router-dom';
 
 let stockContext = React.createContext();
 
@@ -62,7 +62,7 @@ function App() {
                         shoes.map(
                             (shoe,i) => {
                                 return(
-                                    <Item shoes={shoes[i]} i = {i} key = {i}/>
+                                    <Item shoes={shoes[i]} i = {i} key = {i}/> // onClick하면 안됨 html이 아니기때문에.
                                 )
                             }
                         )
@@ -126,9 +126,11 @@ function App() {
   function Item(props) {
 
       let stocks = useContext(stockContext); //useContext(범위)
+      let history = useHistory();
 
     return(
-    <div className={"col-md-4"}>
+    <div className={"col-md-4"} onClick = { () => { history.push('/detail/' + props.shoes.id)}
+    }>
       <img src={'https://codingapple1.github.io/shop/shoes' + (props.i +1) + '.jpg'} width={"100%"} />
       <h4>{props.shoes.title}</h4>
       <p>{props.shoes.content} & {props.shoes.price}</p>
