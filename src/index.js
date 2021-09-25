@@ -9,6 +9,15 @@ import {BrowserRouter} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import {combineReducers, createStore} from "redux";
 
+let memberState = '';
+
+// function reducer3(state = memberState, action) {
+//     switch (action.type) {
+//         case 'login'
+//             break;
+//     }
+// }
+
 let alertState = true;
 // state가 많이 필요하면 reducer많이 만들어야한다.
 function reducer2(state = alertState, action){
