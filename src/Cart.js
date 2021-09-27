@@ -3,7 +3,7 @@ import {Table} from "react-bootstrap";
 import {connect, useDispatch, useSelector} from "react-redux";
 
 function Cart(props) {
-
+    //dispatch
     let state = useSelector((state) => state);
     console.log(state);
     let dispatch = useDispatch();
